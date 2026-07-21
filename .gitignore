@@ -1,0 +1,14 @@
+node_modules/
+out/
+.next/
+src/data/chords.json
+*.log
+
+# Android
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/captures/
+android/*.iml
+android/.idea/

@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --diagram-fg: #2e1c11;
+  --diagram-bg: #faf6f0;
+}
+
+body {
+  background-color: #faf6f0;
+  color: #2e1c11;
+}
