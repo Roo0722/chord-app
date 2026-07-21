@@ -53,8 +53,46 @@ To regenerate chord data only:
 npm run gen:chords
 ```
 
-## Adding more chords
+## Signing a release build
 
-Add or edit entries in `CHORD_QUALITIES` in `src/lib/chordTheory.ts` --
-every key x quality combination is generated automatically by the
-solver, so a new chord type only needs its interval formula.
+Debug builds (`app-debug.apk`) install fine for testing but use a
+throw-away debug key. For a real release you need your own signing
+key so future updates can install over the old app.
+
+**1. Generate a keystore** (do this once, in Termux):
+
+```
+pkg install openjdk-17
+keytool -genkeypair -v -keystore chord-book-release.keystore \
+  -alias chordbook -keyalg RSA -keysize 2048 -validity 10000
+```
+
+It'll prompt for a store password, a key password, and your name/org
+(any values are fine). **Back up this `.keystore` file somewhere safe
+outside git** -- if you lose it, you can never publish an update under
+the same app identity again.
+
+**2. Base64-encode it and add GitHub repo secrets:**
+
+```
+base64 -w 0 chord-book-release.keystore
+```
+
+Go to your repo -> Settings -> Secrets and variables -> Actions, and
+add:
+
+- `ANDROID_KEYSTORE_BASE64` -- the base64 output from above
+- `ANDROID_KEYSTORE_PASSWORD` -- the store password you set
+- `ANDROID_KEY_ALIAS` -- `chordbook` (or whatever alias you used)
+- `ANDROID_KEY_PASSWORD` -- the key password you set
+
+**3. Push.** The workflow detects the secrets automatically and adds a
+`Build signed release APK` step, uploading `chord-book-release-apk` as
+a separate artifact alongside the debug build. No secrets set yet? The
+release steps are skipped and you still get the debug APK as before.
+
+For local/manual signing instead of CI, copy
+`android/keystore.properties.example` to `android/keystore.properties`,
+fill in real values, and place the keystore at the path you set for
+`storeFile` -- both are gitignored so nothing sensitive gets committed.
+

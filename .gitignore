@@ -12,3 +12,7 @@ android/local.properties
 android/captures/
 android/*.iml
 android/.idea/
+android/keystore.properties
+android/app/release.keystore
+android/app/*.jks
+android/app/*.keystore

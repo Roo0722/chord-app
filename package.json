@@ -9,7 +9,8 @@
     "lint": "next lint",
     "gen:chords": "tsx scripts/generateChords.ts",
     "cap:sync": "npx cap sync android",
-    "cap:open": "npx cap open android"
+    "cap:open": "npx cap open android",
+    "gen:icons": "capacitor-assets generate --android"
   },
   "dependencies": {
     "next": "14.2.35",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@capacitor/android": "^6.1.2",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.1.2",
     "@capacitor/core": "^6.1.2",
     "@types/node": "^20.14.9",
